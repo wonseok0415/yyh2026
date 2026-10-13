@@ -75,6 +75,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:20px}
 <table><tr><th>시간</th><th>입장</th></tr><tr><td>10:30–11:00</td><td>7·8·9번 3~8팀</td></tr><tr><td>11:00–11:30</td><td>4·5·6번 5~8팀 · 7·8·9번 1~2팀</td></tr><tr><td>11:30–12:00</td><td>1·2·3번 7~8팀 · 4·5·6번 1~4팀</td></tr><tr><td>12:00–12:30</td><td>1·2·3번 1~6팀</td></tr></table>
 <h3>🎱 포켓볼 (다이 1~3, 25분)</h3>
 <table><tr><th>시간</th><th>다이1</th><th>다이2</th><th>다이3</th></tr>
+<tr><td colspan="4" class="muted">앞에 적힌(번호 작은) 팀이 줄무늬·첫 샷</td></tr>
 <tr><td>10:30</td><td>5 vs 7 (4·5·6)</td><td>6 vs 8 (4·5·6)</td><td>1 vs 2 (7·8·9)</td></tr>
 <tr><td>11:00</td><td>3 vs 7 (7·8·9)</td><td>4 vs 8 (7·8·9)</td><td>5 vs 6 (7·8·9)</td></tr>
 <tr><td>11:30</td><td>1 vs 4 (1·2·3)</td><td>2 vs 5 (1·2·3)</td><td>3 vs 6 (1·2·3)</td></tr>
@@ -104,10 +105,11 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:20px}
 
 <section id="s6"><h2><span class="n">6</span>🎱 포켓볼</h2>
 <ul>
-<li>같은 시간에 한 다이에 들어온 두 팀 3인조가 <b>3:3 공 넣기</b>, 25분.</li>
-<li>줄무늬·단색 구분 없이 번갈아 치고, <b>넣은 공은 전부 친 조의 점수</b> (8번 공도 1개).</li>
-<li>큐볼이 빠지면 상대 턴으로 넘어갈 뿐 벌점은 없어요. 공이 다 떨어지면 다시 세팅해서 25분까지 계속.</li>
-<li>종료 시 많이 넣은 조가 승, 같으면 무. 승 3점 · 무 1점 · 패 0점. 팀 점수가 같으면 넣은 공 합계로 순위.</li>
+<li>같은 시간에 한 다이에 들어온 두 팀 3인조가 <b>3:3 8볼 한 판</b>, 25분. 각 팀 3명이 돌아가며 쳐요.</li>
+<li><b>팀 번호가 작은 팀이 줄무늬(9~15번)와 첫 샷</b>, 큰 팀이 단색(1~7번). 내 동선에도 표시돼요.</li>
+<li>자기 그룹 7개를 다 넣고 8번을 넣으면 승. 8번을 먼저 넣거나 큐볼과 함께 넣으면 패.</li>
+<li>상대 공이 들어가면 그대로 두고 턴만 넘겨요. 큐볼이 빠지면 상대가 자유롭게 놓고 쳐요.</li>
+<li>25분 종료 시 남은 공이 적은 팀 승, 같으면 무. 승 3점 · 무 1점 · 패 0점. 팀 점수가 같으면 넣은 공 합계로 순위.</li>
 </ul>
 </section>
 
@@ -144,7 +146,7 @@ const tSel=document.getElementById('t'),nSel=document.getElementById('n'),out=do
 function show(){const t=+tSel.value,n=+nSel.value; if(!t||!n){return} const s=SLOTS[t+'-'+n];
   const opp=s.pool[2]; const ev=[[BW[s.bowl[0]],'🎳',`<b>볼링 레인 ${s.bowl[1]}</b><br><span class="small muted">같은 조 3명이 한 레인</span>`],
    [SL[s.arch[0]],'🏹',`<b>양궁 사로 ${s.arch[1]}</b> <span class="small muted">${s.arch[1]>=5?'7m':'10m'}</span>`],
-   [SL[s.pool[0]],'🎱',`<b>포켓볼 다이 ${s.pool[1]}</b><br><span class="small">vs <span class="chip" style="background:var(--t${opp})">${EMO[opp-1]} ${opp}팀 ${TR(n)}</span></span>`]].sort((a,b)=>a[0].localeCompare(b[0]));
+   [SL[s.pool[0]],'🎱',`<b>포켓볼 다이 ${s.pool[1]}</b> <span class="chip" style="background:${t<opp?'#fff3c4':'#eee'}">${t<opp?'줄무늬 · 첫 샷':'단색'}</span><br><span class="small">vs <span class="chip" style="background:var(--t${opp})">${EMO[opp-1]} ${opp}팀 ${TR(n)}</span></span>`]].sort((a,b)=>a[0].localeCompare(b[0]));
   try{localStorage.setItem('yyh-me',t+'-'+n)}catch(e){}
   out.innerHTML=`<div class="hero"><span class="chip" style="background:var(--t${t})">${EMO[t-1]} ${t}팀</span> <b>${n}번</b> · ${TR(n)} 조</div>`+ev.map(e=>`<div class="ev"><span class="tm">${e[0]}</span><div>${e[1]} ${e[2]}</div></div>`).join('')+`<p class="small muted">12:30 집결 → 최종 발표 · 시상 → 아웃백</p>`;}
 tSel.onchange=nSel.onchange=show;
