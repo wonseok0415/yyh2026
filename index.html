@@ -44,8 +44,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:20px}
 <main>
 
 <section id="s1"><h2><span class="n">1</span>오늘 일정</h2>
-<div class="tl"><span class="tm">10:10</span><div><b>집결 · 출석</b><br><span class="small muted">타임스퀘어 5층 하늘정원 (바이킹스워프 옆)</span></div></div>
-<div class="tl"><span class="tm">10:20</span><div><b>팀 뽑기 · 오프닝</b><br><span class="small muted">팀장 소개 → 룰렛 → 팔 스티커 부착</span></div></div>
+<div class="tl"><span class="tm">10:10–10:30</span><div><b>오프닝</b> <span class="small muted">담당님 개회사 · 액티비티 팀 구성</span><br><span class="small muted">타임스퀘어 5층 하늘정원(바이킹스워프 옆) 집결 → 개회사 → 팀 룰렛 → 팔 스티커 부착</span></div></div>
 <div class="tl"><span class="tm">10:30–11:10</span><div><b>볼링 1회차</b> <span class="small muted">40분 제한 · 1·2·3번 전 팀 + 4·5·6번 1~4팀</span><br><span class="small muted">나머지는 10:30–11:30 양궁 30분 ↔ 포켓볼 30분(경기 20분) 교대</span></div></div>
 <div class="tl"><span class="tm">11:10–11:30</span><div><b>1회차 볼링조 휴식</b> <span class="small muted">점수 확인 · 다음 슬롯 이동</span></div></div>
 <div class="tl"><span class="tm">11:30</span><div><b>중간 발표</b> <span class="small muted">볼링 1회차 · 9명 환산</span></div></div>
@@ -176,7 +175,7 @@ async function pollScores(){try{const r=await fetch('scores.json?v='+Date.now(),
   const at=new Date(d.at); const tm=isNaN(at)?'':at.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
   const medal=r=>r===1?'🥇':r===2?'🥈':r===3?'🥉':(r||'–');
   live.innerHTML=`<div style="font-weight:800;font-size:17px">${d.final?'🏆 최종 순위':'📊 중간 순위'} <span class="muted small">${tm} 기준</span></div>
-  <table style="font-size:14px"><tr><th>순위</th><th>팀</th><th>🎳</th><th>🏹</th><th>🎱</th><th>합계</th></tr>${d.teams.map(o=>`<tr><td>${medal(o.oR)}</td><td><span class="chip" style="background:var(--t${o.t})">${EMO[o.t-1]} ${o.t}팀</span></td><td>${o.bowl?`${o.bowl.score}<br><span class="muted">${o.bowl.rank}위 +${o.bowl.pts}</span>`:'–'}</td><td>${o.arch?`${o.arch.score}<br><span class="muted">${o.arch.rank}위 +${o.arch.pts}</span>`:'–'}</td><td>${o.pool?`${o.pool.ptsTotal}점<br><span class="muted">승리${o.pool.w3??o.pool.w} 우세${o.pool.w2??0} 무${o.pool.d}</span><br><span class="muted">${o.pool.rank}위 +${o.pool.pts}</span>`:'–'}</td><td><b>${o.tot||'–'}</b></td></tr>`).join('')}</table>
+  <table style="font-size:14px"><tr><th>순위</th><th>팀</th><th>🎳</th><th>🏹</th><th>🎱</th><th>합계</th></tr>${d.teams.map(o=>`<tr><td>${medal(o.oR)}</td><td><span class="chip" style="background:var(--t${o.t})">${EMO[o.t-1]} ${o.t}팀</span></td><td>${o.bowl?`${o.bowl.score}<br><span class="muted">${o.bowl.rank}위 +${o.bowl.pts}</span>`:'–'}</td><td>${o.arch?`${o.arch.score}<br><span class="muted">${o.arch.rank}위 +${o.arch.pts}</span>`:'–'}</td><td>${o.pool?`${o.pool.ptsTotal}점<br><span class="muted" style="white-space:nowrap">승${o.pool.w3??o.pool.w}·우${o.pool.w2??0}·무${o.pool.d}</span><br><span class="muted">${o.pool.rank}위 +${o.pool.pts}</span>`:'–'}</td><td><b>${o.tot||'–'}</b></td></tr>`).join('')}</table>
   <p class="small muted" style="margin:6px 0 0">${d.final?'볼링 보너스 포함 최종 점수예요.':'볼링은 1회차 팀만 반영 · 친 인원이 달라 인당 평균×9명 환산 점수예요. 보너스는 최종 발표 때 공개!'}</p>`;
 }catch(e){}}
 pollScores(); setInterval(pollScores,60000);
